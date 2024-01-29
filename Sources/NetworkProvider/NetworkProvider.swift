@@ -3,7 +3,7 @@
 import Combine
 import Foundation
 
-final class NetworkProvider {
+public final class NetworkProvider {
     
     // MARK: - Typealias
     
@@ -13,17 +13,17 @@ final class NetworkProvider {
     
     // MARK: - Private properties
     
-    private let urlSession: URLSession
-    private let jsonDecoder: JSONDecoder
+    private let urlSession: URLSessionProtocol
+    private let jsonDecoder: JSONDecoderProtocol
     private let requestInterceptors: [RequestInterceptor]
     private let responseInterceptors: [ResponseInterceptor]
     
     
     // MARK: - Initialization
     
-    init(
-        urlSession: URLSession,
-        jsonDecoder: JSONDecoder,
+    public init(
+        urlSession: URLSessionProtocol,
+        jsonDecoder: JSONDecoderProtocol,
         requestInterceptors: [RequestInterceptor],
         responseInterceptors: [ResponseInterceptor]
     ) {
@@ -37,7 +37,7 @@ final class NetworkProvider {
 // MARK: - CombinedNetworkProvider
 
 extension NetworkProvider: CombinedNetworkProvider {
-    func send<T: Decodable>(request: Request) -> AnyPublisher<T, NetworkProviderError> {
+    public func send<T: Decodable>(request: Request) -> AnyPublisher<T, NetworkProviderError> {
         let requestType = type(of: request)
         
         return makeURLRequestPublisher(request: request)
