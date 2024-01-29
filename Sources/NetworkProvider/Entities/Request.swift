@@ -9,10 +9,13 @@ public protocol Request {
     var queryItems: [String: String]? { get }
     var headers: [String: String]? { get }
     var httpBody: [String: Any]? { get }
+    var urlRequest: URLRequest? { get }
 }
 
+// MARK: - urlRequest
+
 extension Request {
-    func makeURLRequest() -> URLRequest? {
+    public var urlRequest: URLRequest? {
         guard var urlComponents = URLComponents(string: host + path) else { return nil }
         
         urlComponents.queryItems = queryItems?.map { URLQueryItem(name: $0.key, value: $0.value) }

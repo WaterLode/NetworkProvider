@@ -67,7 +67,7 @@ extension NetworkProvider: CombinedNetworkProvider {
     }
     
     private func makeURLRequestPublisher(request: Request) -> RequestPublisher {
-        guard let urlRequest = request.makeURLRequest() else { return .error(.failedToCreateURLRequest) }
+        guard let urlRequest = request.urlRequest else { return .error(.failedToCreateURLRequest) }
         
         return .just(urlRequest)
     }
