@@ -2,6 +2,6 @@
 
 import Combine
 
-public protocol CombinedNetworkProvider {
+public protocol CombinedNetworkProvider: AnyObject {
     func send<T: Decodable>(request: Request) -> AnyPublisher<T, NetworkProviderError>
 }

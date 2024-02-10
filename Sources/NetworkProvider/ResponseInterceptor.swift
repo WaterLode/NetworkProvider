@@ -4,11 +4,5 @@ import Foundation
 import Combine
 
 public protocol ResponseInterceptor {
-    func intercept<R: Request>(
-        urlRequest: URLRequest,
-        requestType: R.Type,
-        data: Data?,
-        urlResponse: URLResponse?,
-        error: Error?
-    ) -> AnyPublisher<Void, NetworkProviderError>
+    func intercept<R: Request>(request: R, data: Data?, urlResponse: URLResponse?, error: Error?) throws
 }
