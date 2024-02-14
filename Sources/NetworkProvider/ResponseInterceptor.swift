@@ -4,5 +4,5 @@ import Foundation
 import Combine
 
 public protocol ResponseInterceptor {
-    func intercept<R: Request>(request: R, data: Data?, urlResponse: URLResponse?, error: Error?) throws
+    func intercept(data: Data?, urlResponse: URLResponse?, error: Error?)
 }
