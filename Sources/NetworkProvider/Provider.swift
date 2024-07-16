@@ -38,6 +38,20 @@ extension Provider: NetworkProvider {
         }.resume()
     }
     
+    func upload(urlRequest: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
+        var urlRequest = urlRequest
+        
+        applyRequestInterceptors(urlRequest: &urlRequest)
+        
+        urlSession.uploadTask(with: urlRequest, from: nil) { [weak self] data, urlResponse, error in
+            guard let self = self else { return }
+            
+            self.applyResponseInterceptors(data: data, urlResponse: urlResponse, error: error)
+            
+            completionHandler(data, urlResponse, error)
+        }.resume()
+    }
+    
     private func applyRequestInterceptors(urlRequest: inout URLRequest) {
         requestInterceptors.forEach { $0.intercept(urlRequest: &urlRequest) }
     }
