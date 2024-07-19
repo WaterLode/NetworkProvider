@@ -32,7 +32,7 @@ extension Provider: NetworkProvider {
         urlSession.dataTask(with: urlRequest) { [weak self] data, urlResponse, error in
             guard let self = self else { return }
             
-            self.applyResponseInterceptors(data: data, urlResponse: urlResponse, error: error)
+            self.applyResponseInterceptors(urlRequest: urlRequest, data: data, urlResponse: urlResponse, error: error)
             
             completionHandler(data, urlResponse, error)
         }.resume()
@@ -46,7 +46,7 @@ extension Provider: NetworkProvider {
         urlSession.uploadTask(with: urlRequest, from: nil) { [weak self] data, urlResponse, error in
             guard let self = self else { return }
             
-            self.applyResponseInterceptors(data: data, urlResponse: urlResponse, error: error)
+            self.applyResponseInterceptors(urlRequest: urlRequest, data: data, urlResponse: urlResponse, error: error)
             
             completionHandler(data, urlResponse, error)
         }.resume()
@@ -56,7 +56,7 @@ extension Provider: NetworkProvider {
         requestInterceptors.forEach { $0.intercept(urlRequest: &urlRequest) }
     }
     
-    private func applyResponseInterceptors(data: Data?, urlResponse: URLResponse?, error: Error?) {
-        responseInterceptors.forEach { $0.intercept(data: data, urlResponse: urlResponse, error: error) }
+    private func applyResponseInterceptors(urlRequest: URLRequest, data: Data?, urlResponse: URLResponse?, error: Error?) {
+        responseInterceptors.forEach { $0.intercept(urlRequest: urlRequest, data: data, urlResponse: urlResponse, error: error) }
     }
 }
